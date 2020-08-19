@@ -50,8 +50,8 @@ Create tsconfig.json
 }
 
 
------
-Create webpack.conf.js
+
+-----Create webpack.conf.js----
 
 
 
@@ -111,7 +111,7 @@ module.exports = {
 
 -----To create bundle run webpack from command line or add to scripts in package.json:----------
 
-# webpack
+webpack
 
 
 ---------To run dev server -----
