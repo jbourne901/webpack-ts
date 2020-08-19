@@ -17,6 +17,15 @@ npm install mini-css-extract-plugin style-loader css-loader --save-dev
 
 npm install html-webpack-plugin --save-dev
 
+#if need to package image files:
+
+npm install file-loader --save-dev
+
+#if need to package react files (tsx):
+
+core-js/stable
+npm install react-app-polyfill/ie11 react-app-polyfill/stable --save
+
 
 #if need to run webpack dev server
 
@@ -31,22 +40,36 @@ Create tsconfig.json
 
 {
     "compilerOptions": {
-        "module": "commonjs",
+        "module": "esnext",
         "esModuleInterop": true,
-        "target": "es6",
+        "target": "es5",
         "noImplicitAny": true,
         "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "dist",
-        "baseUrl": ".",
+        "baseUrl": "./",
         "strict": true,
         "paths": {
             "*": ["node_modules/*"]
-        }
-      },
-      "include": [
-        "src/**/*"
-      ]
+        },
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext",
+            "es5",
+            "es6"
+        ],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "react"
+     },
+     "include": [
+        "src"
+     ]
 }
 
 
@@ -85,17 +108,20 @@ const css_rule = {                                            //if need to packa
                     exclude: /node_modules/
 };
 
+const img_rule = { test:  /\.(png|jpg|gif|svg|ttf|woff2|eot)$/,   //if need to package image files/fonts
+                   use: ["file-loader"]
+                 };
+
 
 module.exports = {
-    entry: path.resolve(__dirname, "./src/index.ts"),
+    entry: path.resolve(__dirname, "./src/index.tsx"),
     devtool: "source-map",                                     //enable packaging of map files
     devServer: { port: 4200 },                                 //enable dev server
     output: {
         filename: "[name].[contenthash].js",                   //output file pattern 
         path: path.resolve(__dirname, "dist")                  //output folder
     },
-    module: { rules: [ js_rule, css_rule ]
-            },
+    module: { rules: [ js_rule, css_rule, img_rule ] },
     plugins: [ new HtmlWebpackPlugin({template: path.resolve(__dirname, "./public/index.html"),   // path to html file
                                       minify: {collapseWhitespace: true}
                                      }),
