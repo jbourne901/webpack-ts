@@ -28,17 +28,20 @@ const css_rule = {
                     exclude: /node_modules/
 };
 
+const img_rule = { test:  /\.(png|jpg|gif|svg|ttf|woff2|eot)$/,
+                   use: ["file-loader"]    
+                 };
+
 
 module.exports = {
-    entry: path.resolve(__dirname, "./src/index.ts"),
+    entry: path.resolve(__dirname, "./src/index.tsx"),
     devtool: "source-map",
     devServer: { port: 4200 },
     output: {
         filename: "[name].[contenthash].js",
         path: path.resolve(__dirname, "dist")
     },
-    module: { rules: [ js_rule, css_rule ] 
-            },
+    module: { rules: [ js_rule, css_rule, img_rule ] },
     plugins: [ new HtmlWebpackPlugin({template: path.resolve(__dirname, "./public/index.html"),
                                       minify: {collapseWhitespace: true}
                                      }),
