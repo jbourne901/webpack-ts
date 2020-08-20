@@ -122,6 +122,9 @@ module.exports = {
         path: path.resolve(__dirname, "dist")                  //output folder
     },
     module: { rules: [ js_rule, css_rule, img_rule ] },
+    resolve: {                                                 //this section is required for webpack to correctly locate other ts(x) files included from index.tsx
+        extensions: [ '.tsx', '.ts', '.js' ],
+    },
     plugins: [ new HtmlWebpackPlugin({template: path.resolve(__dirname, "./public/index.html"),   // path to html file
                                       minify: {collapseWhitespace: true}
                                      }),
